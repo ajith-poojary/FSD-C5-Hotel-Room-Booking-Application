@@ -2,8 +2,10 @@ package com.upgrad.booking.entities;
 
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -22,10 +24,10 @@ public class Booking {
     private int bookingId;
 
     @Column(name ="fromDate",nullable = true)
-    private LocalDateTime fromDate;
+    private LocalDate fromDate;
 
     @Column(name ="toDate",nullable = true)
-    private LocalDateTime toDate;
+    private LocalDate toDate;
 
     @Column(name ="aadharNumber",nullable = true)
     private String aadharNumber;
@@ -44,6 +46,7 @@ public class Booking {
     private int transacrionId=0;
 
     @Column(name ="bookedOn",nullable = true)
+    @CreationTimestamp
     private LocalDateTime bookedOn;
 
 
