@@ -9,4 +9,6 @@ public interface TransactionService {
    public int makeTransaction(Transaction transaction);
 
   public List<Transaction> getAll();
+
+  public Transaction getTransactionById(int transcationId);
 }

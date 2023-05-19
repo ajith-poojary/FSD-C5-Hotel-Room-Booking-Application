@@ -15,8 +15,15 @@ public class GlobalExceptionHandler {
         String message= exception.getMessage();
         ApiResponse response = ApiResponse.builder().message(message).statusCode(400).build();
 
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.badRequest().body(response);
 
+    }
+    @ExceptionHandler(TransactionNotFoundException.class)
+    public ResponseEntity<ApiResponse> handleInvalidTransaction(TransactionNotFoundException exception)
+    {
+        String message= exception.getMessage();
+        ApiResponse response = ApiResponse.builder().message(message).statusCode(400).build();
+        return ResponseEntity.badRequest().body(response);
     }
 
 }

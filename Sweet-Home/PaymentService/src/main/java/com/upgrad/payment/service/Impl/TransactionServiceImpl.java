@@ -3,6 +3,8 @@ package com.upgrad.payment.service.Impl;
 import com.upgrad.payment.entities.Transaction;
 
 import com.upgrad.payment.exception.InvalidPayMentOptionException;
+import com.upgrad.payment.exception.TransactionNotFoundException;
+
 import com.upgrad.payment.repository.TransactionRepository;
 import com.upgrad.payment.service.TransactionService;
 
@@ -40,5 +42,11 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public List<Transaction> getAll() {
         return repository.findAll();
+    }
+
+    @Override
+    public Transaction getTransactionById(int transcationId) {
+        return repository.findTranscationBytransactionId(transcationId).orElseThrow(()->new TransactionNotFoundException("There is no transcation for this transaction id "+transcationId));
+
     }
 }
