@@ -1,6 +1,7 @@
 package com.upgrad.booking.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -48,6 +49,10 @@ public class Booking {
     @Column(name ="bookedOn",nullable = true)
     @CreationTimestamp
     private LocalDateTime bookedOn;
+
+    @Transient
+    @JsonIgnore
+    private Transaction transaction;
 
 
 

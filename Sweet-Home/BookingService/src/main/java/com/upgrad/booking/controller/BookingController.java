@@ -1,7 +1,9 @@
 package com.upgrad.booking.controller;
 
 import com.upgrad.booking.dto.BookingDto;
+import com.upgrad.booking.dto.TransactionDTO;
 import com.upgrad.booking.entities.Booking;
+import com.upgrad.booking.entities.Transaction;
 import com.upgrad.booking.service.Impl.BookingServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -79,6 +81,21 @@ public class BookingController {
         BookingDto bookingDto = modelMapper.map(booking, BookingDto.class);
 
         return ResponseEntity.ok(bookingDto);
+
+    }
+
+    @PostMapping(value ="/{bookingId}/transaction")
+    public ResponseEntity makePayment(@PathVariable(name="bookingId") int bookingId,@RequestBody TransactionDTO transactionDTO)
+
+    {
+        System.out.println("Inside BC makepayment");
+        Transaction transaction = modelMapper.map(transactionDTO, Transaction.class);
+
+        Booking booking = bookingService.makePayment(transaction, bookingId);
+
+        BookingDto bookingDto = modelMapper.map(booking, BookingDto.class);
+
+        return ResponseEntity.status(HttpStatus.OK).body(booking);
 
     }
 

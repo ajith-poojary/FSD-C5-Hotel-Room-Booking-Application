@@ -1,6 +1,7 @@
 package com.upgrad.booking.service;
 
 import com.upgrad.booking.entities.Booking;
+import com.upgrad.booking.entities.Transaction;
 
 import java.util.List;
 
@@ -19,7 +20,10 @@ public interface BookingService {
 
     Booking getBookingById(int bookingId);
 
-    // create the transaction endpoint
+    // make transaction
+    Booking makePayment(Transaction transaction,int bookingId);
+
+    Booking updateBooking(Booking booking);
 
 
 }
