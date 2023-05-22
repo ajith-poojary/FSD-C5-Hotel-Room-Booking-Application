@@ -5,6 +5,26 @@ spring:
   application:
     name: API-GATEWAY
 
+  cloud:
+    gateway:
+      routes:
+        - id: BOOKING-SERVICE
+          uri: lb://BOOKING-SERVICE
+          predicates:
+            - Path=/hotel/**
+
+        - id: PAYMENT-SERVICE
+          uri: lb://PAYMENT-SERVICE
+          predicates:
+            - Path=/payment/**
+
+
+
+
+
+
+
+
 eureka:
   instance:
     prefer-ip-address: true
@@ -14,3 +34,5 @@ eureka:
     register-with-eureka: true
     service-url:
       defaultZone: http://localhost:8761/eureka
+
+
