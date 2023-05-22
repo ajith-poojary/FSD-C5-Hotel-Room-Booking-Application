@@ -2,6 +2,8 @@ server:
   port: 8083
 
 spring:
+  application:
+    name: PAYMENT-SERVICE
   datasource:
     url: jdbc:mysql://localhost:3306/SweetHome
     username: root
@@ -18,8 +20,9 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
         use_sql_comments: true
-  application:
-    name: PAYMENT-SERVICE
+
+
+
 
 eureka:
   instance:

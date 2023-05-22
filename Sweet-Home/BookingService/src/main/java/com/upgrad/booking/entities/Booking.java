@@ -43,8 +43,8 @@ public class Booking {
     @Column(name ="roomPrice",nullable = false)
     private int roomPrice;
 
-    @Column(name ="transacrionId")
-    private int transacrionId=0;
+    @Column(name ="transactionId")
+    private int transactionId=0;
 
     @Column(name ="bookedOn",nullable = true)
     @CreationTimestamp
