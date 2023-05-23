@@ -1,8 +1,6 @@
 package com.upgrad.booking.service.Impl;
 
-import com.netflix.discovery.DiscoveryClient;
-import com.upgrad.booking.dto.BookingDto;
-import com.upgrad.booking.dto.TransactionDTO;
+
 import com.upgrad.booking.entities.Booking;
 import com.upgrad.booking.entities.Transaction;
 import com.upgrad.booking.exceptions.InvalidPayMentOptionException;
@@ -23,7 +21,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,14 +48,14 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public Booking makeBooking(Booking booking) {
-        ArrayList<String> availableRooms = helper.getRandomNumbers(booking.getNumOfRoom());
+        ArrayList<String> availableRooms = helper.getRandomNumbers(booking.getNumOfRooms());
         System.out.println("Available Rooms " + availableRooms);
         String availableRoom = String.join(",", availableRooms);
         booking.setRoomNumbers(availableRoom);
         LocalDate fromDate = booking.getFromDate();
         LocalDate toDate = booking.getToDate();
         int NumberOfdays = Period.between(fromDate, toDate).getDays();
-        int price = helper.calculatePrice(NumberOfdays, booking.getNumOfRoom());
+        int price = helper.calculatePrice(NumberOfdays, booking.getNumOfRooms());
         booking.setRoomPrice(price);
 
 
@@ -71,7 +69,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public Booking getBookingById(int bookingId) {
-        return bookingServiceRepository.findById(bookingId).orElseThrow(() -> new ResourceNotFoundException("There is no booking for the provided Id " + bookingId));
+        return bookingServiceRepository.findById(bookingId).orElseThrow(() -> new ResourceNotFoundException("Invalid Booking Id"));
     }
 
     @Override
@@ -107,16 +105,21 @@ public class BookingServiceImpl implements BookingService {
             ResponseEntity<Integer> response = restTemplate.postForEntity(paymentEndUrl, transaction, Integer.class);
 
 
+
+
             Integer resp = response.getBody();
             System.out.println("Transaction 1: " + resp);
             booking.setTransactionId(resp);
+            updateBooking(booking);
+//
+//            Booking updatedBooking = updateBooking(booking);
+//            return updatedBooking;
+            return booking;
 
-            Booking updatedBooking = updateBooking(booking);
-            return updatedBooking;
+        }
+        catch (RestClientException exception) {
 
-        } catch (RestClientException exception) {
-
-            throw new InvalidPayMentOptionException(exception.getMessage());
+            throw new InvalidPayMentOptionException("Invalid mode of payment");
 
         }
 
@@ -124,9 +127,25 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Booking updateBooking(Booking booking) {
-        return bookingServiceRepository.save(booking);
+    public void updateBooking(Booking booking) {
+        int bookingId = booking.getId();
+        Booking retrievedBooking = getBookingById(bookingId);
+        retrievedBooking.setId(booking.getId());
+        retrievedBooking.setFromDate(booking.getFromDate());
+        retrievedBooking.setToDate(booking.getToDate());
+        retrievedBooking.setAadharNumber(booking.getAadharNumber());
+        retrievedBooking.setNumOfRooms(booking.getNumOfRooms());
+        retrievedBooking.setRoomNumbers(booking.getRoomNumbers());
+        retrievedBooking.setRoomPrice(booking.getRoomPrice());
+        retrievedBooking.setTransactionId(booking.getTransactionId());
+
+        bookingServiceRepository.save(retrievedBooking);
     }
+
+//    @Override
+//    public Booking updateBooking(Booking booking) {
+//        return bookingServiceRepository.save(booking);
+//    }
 
 
 }

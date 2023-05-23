@@ -23,7 +23,7 @@ public interface BookingService {
     // make transaction
     Booking makePayment(Transaction transaction,int bookingId);
 
-    Booking updateBooking(Booking booking);
+   void updateBooking(Booking booking);
 
 
 }

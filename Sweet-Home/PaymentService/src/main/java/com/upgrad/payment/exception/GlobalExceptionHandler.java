@@ -26,4 +26,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(response);
     }
 
+    @ExceptionHandler(BookingIdNotFoundException.class)
+    public ResponseEntity<ApiResponse> handleInvalidTransaction(BookingIdNotFoundException exception)
+    {
+        String message= exception.getMessage();
+        ApiResponse response = ApiResponse.builder().message(message).statusCode(400).build();
+        return ResponseEntity.badRequest().body(response);
+    }
+
 }

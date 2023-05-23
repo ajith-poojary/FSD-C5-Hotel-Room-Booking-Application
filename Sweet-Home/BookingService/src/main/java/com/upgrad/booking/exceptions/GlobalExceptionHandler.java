@@ -14,18 +14,18 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiResponse> handleResourceNotFoundException(ResourceNotFoundException exception)
     {
         String message= exception.getMessage();
-        ApiResponse response = ApiResponse.builder().message(message).success(false).status(HttpStatus.NOT_FOUND).build();
+        ApiResponse response = ApiResponse.builder().message(message).statusCode(400).build();
 
-        return new ResponseEntity<ApiResponse>(response,HttpStatus.NOT_FOUND);
+        return new ResponseEntity<ApiResponse>(response,HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(InvalidPayMentOptionException.class)
     public  ResponseEntity<ApiResponse> handlePaymentException(InvalidPayMentOptionException exception)
     {
         String message= exception.getMessage();
-        ApiResponse response = ApiResponse.builder().message(message).success(false).status(HttpStatus.NOT_FOUND).build();
+        ApiResponse response = ApiResponse.builder().message(message).statusCode(400).build();
 
-        return new ResponseEntity<ApiResponse>(response,HttpStatus.NOT_FOUND);
+        return new ResponseEntity<ApiResponse>(response,HttpStatus.BAD_REQUEST);
 
     }
 }

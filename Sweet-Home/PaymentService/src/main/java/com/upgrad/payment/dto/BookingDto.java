@@ -1,12 +1,7 @@
-package com.upgrad.booking.dto;
+package com.upgrad.payment.dto;
 
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -17,10 +12,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 
-@JsonPropertyOrder({"id", "fromDate", "toDate", "aadharNumber", "numOfRooms", "roomNumbers", "roomPrice", "transactionId", "bookedOn"})
 public class BookingDto {
-    private int Id;
-
+    private int bookingId;
     private LocalDate fromDate;
     private LocalDate toDate;
     private String aadharNumber;

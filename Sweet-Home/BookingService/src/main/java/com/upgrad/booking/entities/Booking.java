@@ -22,7 +22,7 @@ public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int bookingId;
+    private int Id;
 
     @Column(name ="fromDate",nullable = true)
     private LocalDate fromDate;
@@ -35,7 +35,7 @@ public class Booking {
 
 
     @Column(name ="numOfRoom")
-    private int numOfRoom;
+    private int numOfRooms;
 
     @Column(name ="roomNumbers")
     private String roomNumbers;

@@ -38,17 +38,9 @@ public class BookingController {
     @PostMapping
     public ResponseEntity<BookingDto> makeBooking(@RequestBody BookingDto bookingDto) {
 
-
-//        LocalDateTime fromDate = LocalDateTime.parse(bookingDto.getFromDate() + "T00:00:00.000", DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-//        LocalDateTime toDate = LocalDateTime.parse(bookingDto.getToDate() + "T00:00:00.000", DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-//
-//        System.out.println(fromDate +"{}"+toDate);
-//
-//        bookingDto.setFromDate(fromDate);
-//        bookingDto.setToDate(toDate);
-
-
+        System.out.println("IN MBC---> bookingDTO--noOfRooms"+bookingDto.getNumOfRooms());
         Booking booking = modelMapper.map(bookingDto, Booking.class);
+        System.out.println("IN MBC--> before saving into db , in MBC --> nuOfRrooms"+booking.getNumOfRooms());
         Booking savedBooking = bookingService.makeBooking(booking);
         BookingDto savedBookingDto = modelMapper.map(savedBooking, BookingDto.class);
 
@@ -85,7 +77,7 @@ public class BookingController {
     }
 
     @PostMapping(value ="/{bookingId}/transaction")
-    public ResponseEntity makePayment(@PathVariable(name="bookingId") int bookingId,@RequestBody TransactionDTO transactionDTO)
+    public ResponseEntity<BookingDto> makePayment(@PathVariable(name="bookingId") int bookingId,@RequestBody TransactionDTO transactionDTO)
 
     {
         System.out.println("Inside BC makepayment");
@@ -95,7 +87,15 @@ public class BookingController {
 
         BookingDto bookingDto = modelMapper.map(booking, BookingDto.class);
 
-        return ResponseEntity.status(HttpStatus.OK).body(booking);
+        return ResponseEntity.status(HttpStatus.CREATED).body(bookingDto);
+
+    }
+
+    @PutMapping
+    public void updateBooking(@RequestBody BookingDto bookingDto)
+    {
+        Booking booking = modelMapper.map(bookingDto, Booking.class);
+        bookingService.updateBooking(booking);
 
     }
 
