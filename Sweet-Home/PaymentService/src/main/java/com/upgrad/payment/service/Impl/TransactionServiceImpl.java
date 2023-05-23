@@ -10,22 +10,23 @@ import com.upgrad.payment.exception.TransactionNotFoundException;
 import com.upgrad.payment.repository.TransactionRepository;
 import com.upgrad.payment.service.TransactionService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
+
+    Logger logger= LoggerFactory.getLogger(TransactionServiceImpl.class);
 
     @Autowired
     TransactionRepository repository;
@@ -76,6 +77,13 @@ public class TransactionServiceImpl implements TransactionService {
             System.out.println("Response entity :{}"+booingDtoObject);
 
              savedTransaction= repository.save(transaction);
+
+            String message = "Booking confirmed for user with aadhaar number: "
+                    + booingDtoObject.getAadharNumber()
+                    +    "    |    "
+                    + "Here are the booking details:    " + booingDtoObject.toString();
+
+             logger.info(message);
 //            int transactionId = savedTransaction.getTransactionId();
 ////
 //            booingDtoObject.setTransactionId(transactionId);

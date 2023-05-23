@@ -1,6 +1,7 @@
 package com.upgrad.booking.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -25,9 +26,11 @@ public class Booking {
     private int Id;
 
     @Column(name ="fromDate",nullable = true)
+
     private LocalDate fromDate;
 
     @Column(name ="toDate",nullable = true)
+
     private LocalDate toDate;
 
     @Column(name ="aadharNumber",nullable = true)

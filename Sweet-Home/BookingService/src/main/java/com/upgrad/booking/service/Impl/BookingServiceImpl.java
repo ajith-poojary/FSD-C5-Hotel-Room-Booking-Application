@@ -15,11 +15,12 @@ import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 
 import java.util.ArrayList;
@@ -54,8 +55,12 @@ public class BookingServiceImpl implements BookingService {
         booking.setRoomNumbers(availableRoom);
         LocalDate fromDate = booking.getFromDate();
         LocalDate toDate = booking.getToDate();
+
+
         int NumberOfdays = Period.between(fromDate, toDate).getDays();
         int price = helper.calculatePrice(NumberOfdays, booking.getNumOfRooms());
+
+
         booking.setRoomPrice(price);
 
 

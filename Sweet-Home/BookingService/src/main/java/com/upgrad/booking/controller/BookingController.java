@@ -38,9 +38,10 @@ public class BookingController {
     @PostMapping
     public ResponseEntity<BookingDto> makeBooking(@RequestBody BookingDto bookingDto) {
 
-        System.out.println("IN MBC---> bookingDTO--noOfRooms"+bookingDto.getNumOfRooms());
+
+
         Booking booking = modelMapper.map(bookingDto, Booking.class);
-        System.out.println("IN MBC--> before saving into db , in MBC --> nuOfRrooms"+booking.getNumOfRooms());
+
         Booking savedBooking = bookingService.makeBooking(booking);
         BookingDto savedBookingDto = modelMapper.map(savedBooking, BookingDto.class);
 
