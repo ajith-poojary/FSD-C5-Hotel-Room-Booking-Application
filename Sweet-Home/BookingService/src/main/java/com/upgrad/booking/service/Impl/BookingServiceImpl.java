@@ -10,6 +10,8 @@ import com.upgrad.booking.repositories.BookingServiceRepository;
 import com.upgrad.booking.service.BookingService;
 import net.bytebuddy.implementation.bytecode.Throw;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
@@ -28,6 +30,8 @@ import java.util.List;
 
 @Service
 public class BookingServiceImpl implements BookingService {
+
+    Logger logger= LoggerFactory.getLogger(BookingServiceImpl.class);
 
 
     @Autowired
@@ -115,7 +119,16 @@ public class BookingServiceImpl implements BookingService {
             Integer resp = response.getBody();
             System.out.println("Transaction 1: " + resp);
             booking.setTransactionId(resp);
+
+
             updateBooking(booking);
+            String message = "Booking confirmed for user with aadhaar number: "
+                    + booking.getAadharNumber()
+                    +    "    |    "
+                    + "Here are the booking details:    " + booking.toString();
+
+            logger.info("After transaction : ");
+            logger.info(message);
 //
 //            Booking updatedBooking = updateBooking(booking);
 //            return updatedBooking;

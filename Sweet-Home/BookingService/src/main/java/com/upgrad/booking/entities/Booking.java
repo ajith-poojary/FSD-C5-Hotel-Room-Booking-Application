@@ -57,6 +57,18 @@ public class Booking {
     @JsonIgnore
     private Transaction transaction;
 
-
-
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "Id=" + Id +
+                ", fromDate=" + fromDate +
+                ", toDate=" + toDate +
+                ", aadharNumber='" + aadharNumber + '\'' +
+                ", numOfRooms=" + numOfRooms +
+                ", roomNumbers='" + roomNumbers + '\'' +
+                ", roomPrice=" + roomPrice +
+                ", transactionId=" + transactionId +
+                ", bookedOn=" + bookedOn +
+                '}';
+    }
 }
